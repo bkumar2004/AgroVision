@@ -136,8 +136,8 @@ const UploadPage = () => {
       const formData = new FormData();
       formData.append('file', selectedFile);
       const url = username
-        ? `http://localhost:8001/predict?username=${encodeURIComponent(username)}`
-        : 'http://localhost:8001/predict';
+        ? `https://agrovision-api.onrender.com/predict?username=${encodeURIComponent(username)}`
+        : 'https://agrovision-api.onrender.com/predict';
 
       const res = await fetch(url, { method: 'POST', body: formData });
       const data = await res.json();
@@ -322,7 +322,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8001/login', {
+      const res = await fetch('https://agrovision-api.onrender.com/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ login_id: loginId, password })
@@ -388,7 +388,7 @@ const RegisterPage = () => {
     e.preventDefault();
     if (formData.password !== formData.confirm_password) { setError('Passwords do not match'); return; }
     try {
-      const res = await fetch('http://localhost:8001/register', {
+      const res = await fetch('https://agrovision-api.onrender.com/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -446,7 +446,7 @@ const ForgotPasswordPage = () => {
   const handleVerify = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8001/forgot-password', {
+      const res = await fetch('https://agrovision-api.onrender.com/forgot-password', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ recovery_id: recoveryId })
       });
@@ -459,7 +459,7 @@ const ForgotPasswordPage = () => {
   const handleReset = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:8001/reset-password', {
+      const res = await fetch('https://agrovision-api.onrender.com/reset-password', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ recovery_id: recoveryId, new_password: newPassword })
       });
@@ -509,7 +509,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     if (!localStorage.getItem('agro_username')) { navigate('/login'); return; }
-    fetch(`http://localhost:8001/scans/${username}`)
+    fetch(`https://agrovision-api.onrender.com/scans/${username}`)
       .then(r => r.json())
       .then(data => { setScans(Array.isArray(data) ? data : []); setLoadingScans(false); })
       .catch(() => setLoadingScans(false));
